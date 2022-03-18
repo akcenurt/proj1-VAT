@@ -30,6 +30,7 @@ public class Main {
 //        List<State> states = new ArrayList<>();
 //        states.add()
         Collections.sort(stateList.states, new FullVATComparator());
+        Collections.reverse(stateList.states);
         for (State state : stateList.getAllStates()) {
             System.out.println(state.getStateSpecialFormatInfo());
         }
