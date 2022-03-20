@@ -31,9 +31,17 @@ public class State /* implements Comparable<State> */ {
         return Double.parseDouble(reducedVAT);
     }
 
+    public boolean isOver20PercentVATAndWithoutSpecialVAT () {
+        if (convertFullVATtoDouble() > 20 && !isUsingSpecialVAT){
+
+            return true;}
+        else {return false;}
+    }
+
+
     public String getStateOver20PercentVATOrWithoutSpecialVAT () {
 
-        if (convertFullVATtoDouble() > 20 || !isUsingSpecialVAT){
+        if (isOver20PercentVATAndWithoutSpecialVAT() == true){
 
         return "States with VAT over 20% OR without special VAT: "+name+" ("+sign+"): "+fullVAT+"%";}
         else {return "...";}

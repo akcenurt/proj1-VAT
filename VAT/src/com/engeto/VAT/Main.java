@@ -34,6 +34,12 @@ public class Main {
         for (State state : stateList.getAllStates()) {
             System.out.println(state.getStateSpecialFormatInfo());
         }
+        System.out.println("=================");
+        for (State state : stateList.getAllStates()) {
+            if (state.isOver20PercentVATAndWithoutSpecialVAT() == false){
+                System.out.println(state.getStateSpecialFormatInfo());
+            }
+        }
 
 //        ArrayList<Customer> customers = new ArrayList<>();
 //        customers.add(new Customer(1, "Karel", LocalDate.of(1979, 1,1)));
