@@ -17,6 +17,14 @@ public class StateList {
         return new ArrayList<>(states);
     }
 
+//    public List<State> getStates(int i) {
+//        return states;
+//    }
+//
+//    public void setStates(List<State> states) {
+//        this.states = states;
+//    }
+
     public void addState (State state) {
         states.add(state);
     }
@@ -31,6 +39,12 @@ public class StateList {
 
         Collections.sort(states, new FullVATComparator());
     }
+
+//    public void printStatesSignsWithComma () {
+//        for(int i = 0; i < states.size(); i++) {
+//            System.out.println(", ");
+//        }
+//    }
 //
 //    public static void printArray(int[] states)
 //    {
