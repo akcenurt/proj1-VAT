@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Main {
 
+
     public static void main(String[] args) {
 	StateList stateList = new StateList();
 
@@ -34,20 +35,13 @@ public class Main {
         for (State state : stateList.getAllStates()) {
             System.out.println(state.getStateSpecialFormatInfo());
         }
-        System.out.println("=================");
+        System.out.print("=================\nSazba VAT 20 % nebo nižší nebo používají speciální sazbu: ");
         for (State state : stateList.getAllStates()) {
             if (state.isOver20PercentVATAndWithoutSpecialVAT() == false){
-                System.out.println(state.getStateSpecialFormatInfo());
+                System.out.print(state.getSign()+", "); // je třeba naformátovat bez poslední čárky
             }
         }
 
-//        ArrayList<Customer> customers = new ArrayList<>();
-//        customers.add(new Customer(1, "Karel", LocalDate.of(1979, 1,1)));
-//        customers.add(new Customer(1, "Karel", LocalDate.of(2009, 1,1)));
-//        customers.add(new Customer(2, "Zora", LocalDate.of(1999, 1,1)));
-//        customers.add(new Customer(3, "Adam", LocalDate.of(1949, 1,1)));
-//        Collections.sort(customers, new CustomerAgeComparator());
-//        customers.forEach(c -> System.out.println(c.getName()+": "+c.getBirthDate()));
 
 
     }

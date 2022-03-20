@@ -25,10 +25,28 @@ public class StateList {
         states.remove(index);
     }
 
+    public int sizeOfList () {return states.size();}
+
     public void sortByFullVAT() {
 
         Collections.sort(states, new FullVATComparator());
     }
+//
+//    public static void printArray(int[] states)
+//    {
+//
+//        System.out.print("[");
+//        for(int i = 0; i < states.length; i++)
+//        {
+//            states[i] = i + 1;
+//            if (i > 0)
+//            {
+//                System.out.print(", ");
+//            }
+//            System.out.print(states[i]);
+//        }
+//        System.out.println("]");
+//    }
 
 
 
