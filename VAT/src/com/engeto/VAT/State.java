@@ -20,6 +20,14 @@ public class State /* implements Comparable<State> */ {
 //        return this.fullVAT.compareTo(second.fullVAT);
 //    }
 
+    public String prepareOutputString(String delimiter) {
+        return getSign() + delimiter
+                + getName() + delimiter
+                + getFullVAT() + delimiter
+                + getReducedVAT() + delimiter
+                + isUsingSpecialVAT + delimiter;
+    }
+
 
     public double convertFullVATtoDouble () {
 

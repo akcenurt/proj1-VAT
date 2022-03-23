@@ -1,15 +1,20 @@
 package com.engeto.VAT;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
 
+    public static final String INPUT_FILENAME = "vat-eu.txt";
+    public static final String DELIMITER = "\t";
+    public static final String OUTPUT_FILENAME = "vat-over-20.txt";
+
 
     public static void main(String[] args) {
 	StateList stateList = new StateList();
 
-    stateList.loadFromFile("vat-eu.txt", "\t");
+    stateList.loadFromFile(INPUT_FILENAME, "\t");
 
     for (State state : stateList.getAllStates()) {
         System.out.println(state.getStateSpecialFormatInfo());
@@ -40,6 +45,12 @@ public class Main {
         }
 
         System.out.println("\n");
+
+        try {
+            stateList.exportToFile(OUTPUT_FILENAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         /* SLIBNÁ ČÁST TISKU BEZ ČÁRKY:
 

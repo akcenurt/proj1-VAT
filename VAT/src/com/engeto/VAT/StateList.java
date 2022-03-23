@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class StateList {
+    public static final String DELIMITER = "\t";
     List<State> states = new ArrayList<>();
 
 
@@ -103,16 +104,14 @@ public class StateList {
 //
 //    }
 //
-//    public void exportToFile(String output) throws PlantException {
-//        int lineNumber = 0;
-//        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
-//            for (Plant plant : plants) {
-//                String plantInLine = plant.prepareOutputString(DELIMITER);
-//                writer.println(plantInLine);
-//                lineNumber++;
-//            }
-//        } catch (IOException e) {
-//            throw new PlantException("Chyba při zápisu: "+output+" řádek: "+lineNumber+": "+e.getLocalizedMessage());
-//        }
-//    }
+    public void exportToFile(String output) throws IOException {
+        int lineNumber = 0;
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
+            for (State state : states) {
+                String stateInLine = state.prepareOutputString(DELIMITER);
+                writer.println(stateInLine);
+                lineNumber++;
+            }
+        }
+    }
 }
