@@ -1,6 +1,8 @@
+package com.engeto.VAT;
+
 import java.util.Scanner;
 
-public class Support {
+public class Reading {
 
     private static Scanner scanner = null;
     private static Scanner getScanner() {
