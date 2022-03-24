@@ -6,21 +6,22 @@ import java.util.*;
 
 public class Main {
 
+    public static int readOneIntFromInput() {
+        int filter = Reading.safeReadInt();
+        return filter;
+    }
+
+
+
     public static final String INPUT_FILENAME = "vat-eu.txt";
     public static final String DELIMITER = "\t";
-    public static final String OUTPUT_FILENAME = "vat-over-20.txt";
-
-
-
-    public static void readOneIntFromInput() {
-        int input = Reading.safeReadInt();
-    }
 
 
 
 
     public static void main(String[] args) {
-	StateList stateList = new StateList();
+
+	    StateList stateList = new StateList();
 
     stateList.loadFromFile(INPUT_FILENAME, "\t");
 
@@ -45,7 +46,7 @@ public class Main {
         for (State state : stateList.getAllStates()) {
             System.out.println(state.getStateSpecialFormatInfo());
         }
-        System.out.print("=================\nSazba VAT 20 % nebo nižší nebo používají speciální sazbu: ");
+        System.out.print("=================\nSazba VAT 20 % nebo nižší nebo používají speciální sazbu: "); // na toto napsat metodu, aby se dalo přidat do prepareOutputString
         for (State state : stateList.getAllStates()) {
             if (state.isOver20PercentVATAndWithoutSpecialVAT() == false){
                 System.out.print(state.getSign()+ ", "); // je třeba naformátovat bez poslední čárky
@@ -54,13 +55,19 @@ public class Main {
 
         System.out.println("\n");
 
+        int filter = readOneIntFromInput();
+        if (filter == 0) {
+            filter = 20;
+        }
+        String OUTPUT_FILENAME = "vat-over-"+filter+".txt"; // použít filter i v duplikátu metody isOver20PercentVATAndWithoutSpecialVAT
+
         try {
             stateList.exportToFile(OUTPUT_FILENAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        readOneIntFromInput();
+
 
         /* SLIBNÁ ČÁST TISKU BEZ ČÁRKY:
 
@@ -78,40 +85,6 @@ public class Main {
         System.out.println(courseMessage);
 
         KONEC SLIBNÉ ČÁSTI */
-
-
-
-
-//        String courseMessage = "Přehled států: " + stateList.getAllStates();
-//        for (int i = 1; i<stateList.sizeOfList();++i) {
-//            courseMessage += ", " + stateList.getStates(i);
-//        }
-//        System.out.println(courseMessage);
-
-//        for (String userName : studentEnrollments.keySet()) {
-//            System.out.println("Student: " + userName);
-//            ArrayList<String> courses = studentEnrollments.get(userName);
-//            String courseMessage = "Courses: ";
-//            for (String singleCourse : courses) {
-//                courseMessage += singleCourse + ", ";
-//                System.out.println(courseMessage);
-//            }
-//        }
-//        String message = "Přehled států: ";
-//        String separator = "";
-//        for (State state : stateList.getAllStates()) {
-//            message += separator + state.getSign();
-//            System.out.println(message);
-//            separator = ",";
-//        }
-
-//        for(int i = 0; i < stateList.sizeOfList(); i++) {
-//            for (State state : stateList.getAllStates()) {
-//                if (state.isOver20PercentVATAndWithoutSpecialVAT() == false){
-//                    System.out.print(state.getSign()+", ");
-//                }
-//            }
-//        }
 
 
 

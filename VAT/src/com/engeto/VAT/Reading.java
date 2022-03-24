@@ -25,7 +25,7 @@ public class Reading {
         try {
             result = Integer.parseInt(inputText);
         } catch (NumberFormatException ex) {
-            System.err.println("Zadal jsi text, který nelze převést na celé číslo: "+inputText);
+            System.err.println("You entered nothing. Default value has been set to 20");
         }
         return result;
     }

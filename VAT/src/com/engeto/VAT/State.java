@@ -39,7 +39,7 @@ public class State /* implements Comparable<State> */ {
         return Double.parseDouble(reducedVAT);
     }
 
-    public boolean isOver20PercentVATAndWithoutSpecialVAT () {
+    public boolean isOver20PercentVATAndWithoutSpecialVAT () { // zce bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
         if (convertFullVATtoDouble() > 20 && !isUsingSpecialVAT){
 
             return true;}
