@@ -8,7 +8,7 @@ public class FullVATComparator implements Comparator<State> {
         @Override
         public int compare(State first, State second) {
 
-            return //first.convertFullVATtoDouble().compareTo(second.convertFullVATtoDouble());
-                    Double.compare(first.convertFullVATtoDouble(), second.convertFullVATtoDouble());
+            return Double.compare(first.convertFullVATtoDouble(), second.convertFullVATtoDouble());
+            //first.convertFullVATtoDouble().compareTo(second.convertFullVATtoDouble());
     }
 }

@@ -1,11 +1,15 @@
 package com.engeto.VAT;
 
-public class State /* implements Comparable<State> */ {
+import static com.engeto.VAT.Main.readOneIntFromInput;
+
+public class State {
     String sign;
     String name;
     String fullVAT;
     String reducedVAT;
     boolean isUsingSpecialVAT;
+
+    // konstruktor, změnu čárky za tečku built-in:
 
     public State(String sign, String name, String fullVAT, String reducedVAT, boolean isUsingSpecialVAT) {
         this.sign = sign;
@@ -15,10 +19,7 @@ public class State /* implements Comparable<State> */ {
         this.isUsingSpecialVAT = isUsingSpecialVAT;
     }
 
-//    @Override
-//    public int compareTo(State second) {
-//        return this.fullVAT.compareTo(second.fullVAT);
-//    }
+    // příprava Stringu pro export do souboru:
 
     public String prepareOutputString(String delimiter) {
         return getSign() + delimiter
@@ -27,6 +28,55 @@ public class State /* implements Comparable<State> */ {
                 + getReducedVAT() + delimiter
                 + isUsingSpecialVAT + delimiter;
     }
+
+    // metoda filtruje státy (dle zadání) - vybere státy s VAT 20%+ nepoužívající SpecVAT
+
+    public boolean isOver20PercentVATAndWithoutSpecialVAT () {
+        if (convertFullVATtoDouble() > 20 && !isUsingSpecialVAT){
+
+            return true;}
+        else {return false;}
+    }
+
+    // metoda vrátí státy s VAT 20%+ nepoužívající SpecVAT v požadovaném formátu
+
+    public String getStateOver20PercentVATOrWithoutSpecialVAT () {
+
+        if (isOver20PercentVATAndWithoutSpecialVAT() == true){
+
+            return name+" ("+sign+"): "+fullVAT+"%";}
+        else {return "...";}
+    }
+
+    //
+
+    public boolean isOverXPercentVAT () {// zce bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
+        int filter = readOneIntFromInput();
+        if (filter == 0) {filter = 20;}
+        if (convertFullVATtoDouble() > filter){
+
+            return true;}
+        else {return false;}
+    }
+
+    //
+
+//    public String getStateOverXPercentVAT () {
+//
+//        if (isOverXPercentVAT() == true){
+//
+//            return "States with VAT over "+filter+"%: "+name+" ("+sign+"): "+fullVAT+"%";}
+//        else {return "...";}
+//    }
+
+    // vrací požadované údaje o státu v požadovaném formátu:
+
+
+    public String getStateSpecialFormatInfo () {
+        return name+" ("+sign+"): "+fullVAT+"%";
+    }
+
+    // konvertory načtou data z výchozího souboru jako String a přeparsují na double, aby se se vstupem dalo pracovat jako s číslem:
 
 
     public double convertFullVATtoDouble () {
@@ -39,25 +89,8 @@ public class State /* implements Comparable<State> */ {
         return Double.parseDouble(reducedVAT);
     }
 
-    public boolean isOver20PercentVATAndWithoutSpecialVAT () { // zce bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
-        if (convertFullVATtoDouble() > 20 && !isUsingSpecialVAT){
 
-            return true;}
-        else {return false;}
-    }
-
-
-    public String getStateOver20PercentVATOrWithoutSpecialVAT () {
-
-        if (isOver20PercentVATAndWithoutSpecialVAT() == true){
-
-        return "States with VAT over 20% OR without special VAT: "+name+" ("+sign+"): "+fullVAT+"%";}
-        else {return "...";}
-    }
-
-    public String getStateSpecialFormatInfo () {
-        return name+" ("+sign+"): "+fullVAT+"%";
-    }
+    // GETTERY A SETTERY:
 
     public String getSign() {
         return sign;
@@ -79,6 +112,8 @@ public class State /* implements Comparable<State> */ {
         return fullVAT;
     }
 
+    // setter řeší nahrazení tečky čárkou:
+
     public void setFullVAT(String fullVAT) {
 
         fullVAT = fullVAT.replace(",", ".");
@@ -88,6 +123,8 @@ public class State /* implements Comparable<State> */ {
     public String getReducedVAT() {
         return reducedVAT;
     }
+
+    // setter řeší nahrazení tečky čárkou:
 
     public void setReducedVAT(String reducedVAT) {
         reducedVAT = reducedVAT.replace(",", ".");

@@ -19,6 +19,7 @@ public class Reading {
      * prints error and return 0;
      * @return Integer read or 0 if invalid input entered
      */
+
     public static int safeReadInt() {
         int result = INVALID_INPUT;
         String inputText = getScanner().nextLine();

@@ -12,19 +12,11 @@ public class StateList {
     List<State> states = new ArrayList<>();
 
 
-// copy of a list
+// metoda poskytne kopii listu
     public List<State> getAllStates() {
-        // Vytvořím kopii listu a tu poskytnu jako výsledek volání:
         return new ArrayList<>(states);
     }
 
-//    public List<State> getStates(int i) {
-//        return states;
-//    }
-//
-//    public void setStates(List<State> states) {
-//        this.states = states;
-//    }
 
     public void addState (State state) {
         states.add(state);
@@ -36,34 +28,13 @@ public class StateList {
 
     public int sizeOfList () {return states.size();}
 
-    public void sortByFullVAT() {
 
-        Collections.sort(states, new FullVATComparator());
-    }
-
-//    public void printStatesSignsWithComma () {
-//        for(int i = 0; i < states.size(); i++) {
-//            System.out.println(", ");
-//        }
-//    }
+//    public void sortByFullVAT() {
 //
-//    public static void printArray(int[] states)
-//    {
-//
-//        System.out.print("[");
-//        for(int i = 0; i < states.length; i++)
-//        {
-//            states[i] = i + 1;
-//            if (i > 0)
-//            {
-//                System.out.print(", ");
-//            }
-//            System.out.print(states[i]);
-//        }
-//        System.out.println("]");
+//        Collections.sort(states, new FullVATComparator());
 //    }
 
-
+    // načtení z výchozího souboru:
 
     public void loadFromFile (String filename, String delimiter) {
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
@@ -84,26 +55,9 @@ public class StateList {
             e.printStackTrace();
         }
     }
-//
-//
-//
-//    public void saveToFile (String inputFilename, String delimiter) {
-//        try (PrintWriter writer = new PrintWriter(new FileWriter(inputFilename))) {
-//            for (Plant plant : plants) {
-//                String outputLine = plant.getName()+delimiter;
-//                outputLine += plant.getNotes()+delimiter;
-//                outputLine += plant.getFrequencyOfWatering()+delimiter;
-//                outputLine += plant.getWatering().toString()+delimiter;
-//                outputLine += plant.getPlanted().toString()+delimiter;
-//                writer.println(outputLine);
-//
-//            } }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
+
+    // export do souboru:
+
     public void exportToFile(String output) throws IOException {
         int lineNumber = 0;
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
@@ -112,6 +66,8 @@ public class StateList {
                 writer.println(stateInLine);
                 lineNumber++;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

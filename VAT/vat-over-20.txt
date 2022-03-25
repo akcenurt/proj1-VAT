@@ -4,9 +4,7 @@ HR	Croatia	25	13	false
 DK	Denmark	25	25	false	
 FI	Finland	24	14	false	
 GR	Greece	24	13	false	
-PT	Portugal	23	13	true	
 PL	Poland	23	8	false	
-IE	Ireland	23	13.5	true	
 SI	Slovenia	22	9.5	false	
 IT	Italy	22	10	false	
 NL	Netherlands	21	6	false	
@@ -14,15 +12,3 @@ LT	Lithuania	21	9	false
 LV	Latvia	21	12	false	
 ES	Spain	21	10	false	
 CZ	Czech Republic	21	15	false	
-BE	Belgium	21	12	true	
-GB	United Kingdom	20	5	false	
-SK	Slovakia	20	10	false	
-RO	Romania	20	9	false	
-FR	France	20	10	false	
-EE	Estonia	20	9	false	
-BG	Bulgaria	20	9	false	
-AT	Austria	20	10	true	
-DE	Germany	19	7	false	
-CY	Cyprus	19	9	false	
-MT	Malta	18	7	false	
-LU	Luxembourg	17	14	true	
