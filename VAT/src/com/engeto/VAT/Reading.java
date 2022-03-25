@@ -12,7 +12,6 @@ public class Reading {
         return scanner;
     }
 
-    public static int INVALID_INPUT = 0;
 
     /**
      * Read one integer. If given input cannot be converted to integer,
@@ -21,12 +20,13 @@ public class Reading {
      */
 
     public static int safeReadInt() {
-        int result = INVALID_INPUT;
+        int result = 20;
         String inputText = getScanner().nextLine();
         try {
             result = Integer.parseInt(inputText);
+            if (result == 0){result = 20;}
         } catch (NumberFormatException ex) {
-            System.err.println("You entered nothing. Default value has been set to 20");
+            System.err.println("You have entered nothing or ZERO. Default value has been set to 20.");
         }
         return result;
     }

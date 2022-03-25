@@ -1,7 +1,6 @@
 package com.engeto.VAT;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -10,12 +9,13 @@ public class Main {
 // načte input:
     public static int readOneIntFromInput() {
         int filter = Reading.safeReadInt();
+        if (filter == 0) { filter = 20; }
         return filter;
     }
 
 
     public static final String INPUT_FILENAME = "vat-eu.txt";
-    public static final String DELIMITER = "\t";
+    public static final int FILTER = readOneIntFromInput();
 
 
 
@@ -61,6 +61,8 @@ public class Main {
                 System.out.print(state.getSign()+ ", ");
             }
         }
+        System.out.println();
+        System.out.println("------------------\n");
 
 //        6. Výsledný výpis zapiš také do souboru s názvem vat-over-20.txt. Výstupní soubor ulož do stejné složky, ve které byl vstupní soubor.
 //        (Výpis na obrazovku zůstává.)
@@ -82,19 +84,29 @@ public class Main {
 
 //        7. Doplň možnost, aby uživatel z klávesnice zadal výši sazby DPH/VAT, podle které se má filtrovat.
 //        Vypíší se tedy státy se základní sazbou vyšší než ta, kterou uživatel zadal.
-//        a) Pokud uživatel zmáčkne pouze Enter, jako výchozí hodnota se použij jako výchozí sazbu 20 %.
+//        a) Pokud uživatel zmáčkne pouze Enter, jako výchozí hodnota se použije sazba 20 %.
 //        b) Uprav název výstupního souboru tak, aby reflektoval zadanou sazbu daně.
 //        Například pro zadanou sazbu 17 % se vygeneruje soubor vat-over-17.txt a pro sazbu 25 % se vygeneruje soubor vat-over-25.txt.
 
-        
+// ZDE BYLO ZAMÝŠLENO ZADÁVAT FILTR:
+//        System.out.println("Zadej filtr: ");
+//        int filter = readOneIntFromInput();
+//        if (filter == 0) {filter = 20; }
 
-        // TOTO NEFUNGUJE DOBŘe, musím pořád zadávat hodnoty, nestačí zadat jednou:
+        StateList stateListOverFilter = new StateList();
+        for (State state : stateList.getAllStates()) {
+            if (state.isOverXPercentVAT() == true) {
+                stateListOverFilter.addState(state);
+            }
+        }
 
-//        for (State state : stateList.getAllStates()) {
-//            int filter = readOneIntFromInput();
-//            if (filter == 0) {filter = 20;}
-//            System.out.println(state.getStateOverXPercentVAT());
-//        }
+        String NEXTOUTPUT_FILENAME = "vat-over-"+FILTER+".txt";
+
+        try {
+            stateListOverFilter.exportToFile(NEXTOUTPUT_FILENAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 

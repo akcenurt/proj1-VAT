@@ -1,10 +1,6 @@
 package com.engeto.VAT;
 
 import java.io.*;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.util.*;
 
 public class StateList {

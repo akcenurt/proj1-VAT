@@ -1,8 +1,11 @@
 package com.engeto.VAT;
 
-import static com.engeto.VAT.Main.readOneIntFromInput;
+
 
 public class State {
+
+    public static final int FILTER = Main.readOneIntFromInput();
+
     String sign;
     String name;
     String fullVAT;
@@ -18,6 +21,7 @@ public class State {
         this.setReducedVAT(reducedVAT);
         this.isUsingSpecialVAT = isUsingSpecialVAT;
     }
+
 
     // příprava Stringu pro export do souboru:
 
@@ -48,26 +52,25 @@ public class State {
         else {return "...";}
     }
 
-    //
 
-    public boolean isOverXPercentVAT () {// zce bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
-        int filter = readOneIntFromInput();
-        if (filter == 0) {filter = 20;}
-        if (convertFullVATtoDouble() > filter){
+    // metoda filtruje státy (dle zadání) - vybere státy s VAT X%+, kde X = FILTER zadaný uživatelem
 
-            return true;}
+    public boolean isOverXPercentVAT () {// zde bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
+
+        if (convertFullVATtoDouble() > FILTER){return true;}
         else {return false;}
     }
 
-    //
+    // metoda vrátí státy s VAT X%+, kde X = FILTER zadaný uživatelem, v požadovaném formátu
 
-//    public String getStateOverXPercentVAT () {
-//
-//        if (isOverXPercentVAT() == true){
-//
-//            return "States with VAT over "+filter+"%: "+name+" ("+sign+"): "+fullVAT+"%";}
-//        else {return "...";}
-//    }
+
+    public String getStateOverXPercentVAT () {
+
+        if (isOverXPercentVAT() == true){
+
+            return name+" ("+sign+"): "+fullVAT+"%";}
+        else {return "...";}
+    }
 
     // vrací požadované údaje o státu v požadovaném formátu:
 
