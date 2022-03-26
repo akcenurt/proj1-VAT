@@ -64,6 +64,15 @@ public class State {
     // metoda vrátí státy s VAT X%+, kde X = FILTER zadaný uživatelem, v požadovaném formátu
 
 
+// TAKTO NAHRADIT METODU NÍŽE:
+//    public String getStateOverXPercentVAT (int filter) {
+//        if (convertFullVATtoDouble() > filter){
+//
+//            return name+" ("+sign+"): "+fullVAT+"%";}
+//        else {return "...";}
+//    }
+
+
     public String getStateOverXPercentVAT () {
 
         if (isOverXPercentVAT() == true){
@@ -77,6 +86,12 @@ public class State {
 
     public String getStateSpecialFormatInfo () {
         return name+" ("+sign+"): "+fullVAT+"%";
+    }
+
+    // Sweden (SE):    25 % (12 %)
+
+    public String getStateSpecialFormatInfo2 () {
+        return name+" ("+sign+"): "+fullVAT+"% ("+reducedVAT+" %)";
     }
 
     // konvertory načtou data z výchozího souboru jako String a přeparsují na double, aby se se vstupem dalo pracovat jako s číslem:

@@ -24,6 +24,10 @@ public class StateList {
 
     public int sizeOfList () {return states.size();}
 
+    public State getState (int index) {
+        return states.get(index);
+    }
+
 
 //    public void sortByFullVAT() {
 //
