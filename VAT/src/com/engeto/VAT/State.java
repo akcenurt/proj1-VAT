@@ -27,16 +27,6 @@ public class State {
     }
 
 
-    // příprava Stringu pro export do souboru:
-
-    public String prepareOutputString(String delimiter) {
-        return getSign() + delimiter
-                + getName() + delimiter
-                + getFullVAT() + delimiter
-                + getReducedVAT() + delimiter
-                + isUsingSpecialVAT + delimiter;
-    }
-
     // metoda filtruje státy (dle zadání) - vybere státy s VAT 20%+ nepoužívající SpecVAT
 
     public boolean isOver20PercentVATAndWithoutSpecialVAT () {
@@ -46,15 +36,7 @@ public class State {
         else {return false;}
     }
 
-    // metoda vrátí státy s VAT 20%+ nepoužívající SpecVAT v požadovaném formátu
 
-    public String getStateOver20PercentVATOrWithoutSpecialVAT () {
-
-        if (isOver20PercentVATAndWithoutSpecialVAT() == true){
-
-            return name+" ("+sign+"): "+fullVAT+"%";}
-        else {return "...";}
-    }
 
     // metoda filtruje státy (dle zadání) - vybere státy s VAT X%+, kde X = FILTER zadaný uživatelem
 
@@ -64,26 +46,6 @@ public class State {
         else {return false;}
     }
 
-    // metoda vrátí státy s VAT X%+, kde X = FILTER zadaný uživatelem, v požadovaném formátu
-
-
-
-    // VZOR:
-//    public String getStateOverXPercentVAT (int filter) {
-//        if (convertFullVATtoDouble() > filter){
-//
-//            return name+" ("+sign+"): "+fullVAT+"%";}
-//        else {return "...";}
-//    }
-
-
-    public String getStateOverXPercentVAT (double filter) {
-
-        if (convertFullVATtoDouble() > filter){
-
-            return name+" ("+sign+"): "+fullVAT+"%";}
-        else {return "...";}
-    }
 
     // vrací požadované údaje o státu v požadovaném formátu:
 
@@ -109,27 +71,6 @@ public class State {
     public double convertReducedVATtoDouble () {
 
         return Double.parseDouble(reducedVAT);
-    }
-
-
-    public void loadFromFile (String filename, String delimiter) {
-        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
-
-            while (scanner.hasNextLine()) {
-                String inputLine = scanner.nextLine();
-                String[] parts = inputLine.split(delimiter);
-                String sign = parts[0];
-                String name = parts[1];
-                String fullVAT = parts[2];
-                String reducedVAT = parts[3];
-                boolean isUsingSpecialVAT = Boolean.parseBoolean(parts[4]);
-
-                State state = new State (sign, name, fullVAT, reducedVAT, isUsingSpecialVAT);
-                }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 

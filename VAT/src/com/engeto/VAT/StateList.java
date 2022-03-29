@@ -29,10 +29,6 @@ public class StateList {
     }
 
 
-//    public void sortByFullVAT() {
-//
-//        Collections.sort(states, new FullVATComparator());
-//    }
 
     // načtení z výchozího souboru:
 
@@ -93,9 +89,6 @@ public class StateList {
     }
 
 
-
-
-
     public void printLineOfSignsUnder20() {
         List <String> statesUnder20 = new ArrayList<>();
         for (State state : states) { //pro státy z stateLIstUnder20
@@ -134,26 +127,5 @@ public class StateList {
 
     }
 
-// POKUS O METODU, KTERÁ ZAHRNUJE ITERATOR A PŮJDE APLIKOVAT NA STATELIST:
-//    public void printLineOfSignsUnder20() {
-//        List <String> statesUnder20 = new ArrayList<>();
-//        for (State state : states) { //pro státy z stateLIstUnder20
-//            if (state.convertFullVATtoDouble() > 20 && !state.isUsingSpecialVAT){
-//                statesUnder20.add(state.getSign());
-//            }
-//        }
-//        System.out.print("=================\nSazba VAT 20 % a nižší nebo používají speciální sazbu: ");
-//        Iterator it;
-//        it = statesUnder20.iterator();
-//        while(it.hasNext()){
-//            System.out.print(it.next());
-//            if (it.hasNext()){
-//                System.out.print(", ");
-//            }else{
-//                System.out.print(".");
-//            }
-//        }
-//
-//    }
 
 }
