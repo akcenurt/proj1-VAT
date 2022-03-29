@@ -19,11 +19,11 @@ public class Reading {
      * @return Integer read or 0 if invalid input entered
      */
 
-    public static int safeReadInt() {
-        int result = 20;
+    public static double safeReadInt() {
+        double result = 20;
         String inputText = getScanner().nextLine();
         try {
-            result = Integer.parseInt(inputText);
+            result = Double.parseDouble(inputText);
             if (result == 0){result = 20;}
         } catch (NumberFormatException ex) {
             System.err.println("You have entered nothing or ZERO. Default value has been set to 20.");

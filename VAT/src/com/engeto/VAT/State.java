@@ -1,10 +1,14 @@
 package com.engeto.VAT;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class State {
 
-    public static final int FILTER = Main.readOneIntFromInput();
+//    public static int FILTER = Main.readOneIntFromInput();
 
     String sign;
     String name;
@@ -52,19 +56,19 @@ public class State {
         else {return "...";}
     }
 
-
     // metoda filtruje státy (dle zadání) - vybere státy s VAT X%+, kde X = FILTER zadaný uživatelem
 
-    public boolean isOverXPercentVAT () {// zde bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
+    public boolean isOverXPercentVAT (double filter) {// zde bude proměnná načtená z klávesnice, nebo spíš další metoda, ale podobná
 
-        if (convertFullVATtoDouble() > FILTER){return true;}
+        if (convertFullVATtoDouble() > filter){return true;}
         else {return false;}
     }
 
     // metoda vrátí státy s VAT X%+, kde X = FILTER zadaný uživatelem, v požadovaném formátu
 
 
-// TAKTO NAHRADIT METODU NÍŽE:
+
+    // VZOR:
 //    public String getStateOverXPercentVAT (int filter) {
 //        if (convertFullVATtoDouble() > filter){
 //
@@ -73,9 +77,9 @@ public class State {
 //    }
 
 
-    public String getStateOverXPercentVAT () {
+    public String getStateOverXPercentVAT (double filter) {
 
-        if (isOverXPercentVAT() == true){
+        if (convertFullVATtoDouble() > filter){
 
             return name+" ("+sign+"): "+fullVAT+"%";}
         else {return "...";}
@@ -105,6 +109,27 @@ public class State {
     public double convertReducedVATtoDouble () {
 
         return Double.parseDouble(reducedVAT);
+    }
+
+
+    public void loadFromFile (String filename, String delimiter) {
+        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
+
+            while (scanner.hasNextLine()) {
+                String inputLine = scanner.nextLine();
+                String[] parts = inputLine.split(delimiter);
+                String sign = parts[0];
+                String name = parts[1];
+                String fullVAT = parts[2];
+                String reducedVAT = parts[3];
+                boolean isUsingSpecialVAT = Boolean.parseBoolean(parts[4]);
+
+                State state = new State (sign, name, fullVAT, reducedVAT, isUsingSpecialVAT);
+                }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
