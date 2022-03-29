@@ -62,7 +62,7 @@ public class StateList {
         int lineNumber = 0;
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
             for (State state : states) {
-                String stateInLine = state.prepareOutputString(DELIMITER);
+                String stateInLine = state.getStateSpecialFormatInfo();
                 writer.println(stateInLine);
                 lineNumber++;
             }
@@ -70,4 +70,33 @@ public class StateList {
             e.printStackTrace();
         }
     }
+
+    public void printStates1() {
+        System.out.println("Státy se základní sazbou DPH vyšší než 20% a zároveň nepoužívající speciální sazbu daně seřazeny sestupně:\n");
+        for (State state : states) {
+            System.out.println(state.getStateSpecialFormatInfo2());
+        }
+    }
+
+    public void printLineOfSignsUnder20() {
+        List <String> statesUnder20 = new ArrayList<>();
+        for (State state : states) {
+            if (state.convertFullVATtoDouble() > 20 && !state.isUsingSpecialVAT){
+                statesUnder20.add(state.getSign());
+            }
+        }
+        System.out.print("=================\nSazba VAT 20 % a nižší nebo používají speciální sazbu: ");
+        Iterator it;
+        it = statesUnder20.iterator();
+        while(it.hasNext()){
+            System.out.print(it.next());
+            if (it.hasNext()){
+                System.out.print(", ");
+            }else{
+                System.out.print(".");
+            }
+        }
+
+    }
+
 }
