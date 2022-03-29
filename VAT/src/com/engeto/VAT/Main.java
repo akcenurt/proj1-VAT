@@ -28,7 +28,11 @@ public class Main {
 
 	    StateList stateList = new StateList();
 
-        stateList.loadFromFile(INPUT_FILENAME, "\t");
+        try {
+            stateList.loadFromFile(INPUT_FILENAME, "\t");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 //        2. Vypiš seznam všech států a u každého uveď základní sazbu daně z přidané hodnoty ve formátu podle vzoru: Název země (zkratka): základní sazba %
         System.out.println("Stát (zkratka): základní sazba DPH: \n");
@@ -42,10 +46,13 @@ public class Main {
         System.out.println("Státy se základní sazbou DPH vyšší než 20% a zároveň nepoužívající speciální sazbu daně:\n");
 
         StateList stateListOver20 = new StateList();
+        StateList stateListUnder20 = new StateList();
         for (State state : stateList.getAllStates()) {
             if (state.isOver20PercentVATAndWithoutSpecialVAT() == true) {
                 stateListOver20.addState(state);
-            } //else přiřadit do under
+            } else {
+                stateListUnder20.addState(state);
+            }
         }
 
         for (State state : stateListOver20.getAllStates()) {
@@ -74,13 +81,16 @@ public class Main {
 //        stateListUnder20.printLineOfSignsUnder20();
 
 
+        stateListUnder20.printLineOfSignsUnder20();
+
+
         //OK1:
-        List <String> statesUnder20 = new ArrayList<>();
-        for (State state : stateList.getAllStates()) {
-            if (state.convertFullVATtoDouble() < 20 && !state.isUsingSpecialVAT){ //tento výpis nefunguje dobře
-                statesUnder20.add(state.getSign());
-            }
-        }
+//        List <String> statesUnder20 = new ArrayList<>();
+//        for (State state : stateList.getAllStates()) {
+//            if (state.convertFullVATtoDouble() < 20 && !state.isUsingSpecialVAT){ //tento výpis nefunguje dobře
+//                statesUnder20.add(state.getSign());
+//            }
+//        }
 
 // ŘEŠENÍ TVORBY TŘÍDY STATELIST, NA KTERÉ SE ALE NEDAJÍ POUŽÍT METODY NA LISTY (ASI BYCH MUSEL NAPOSAT METODY V STATELISTU)
 //        StateList stateListUnder20 = new StateList();
@@ -100,21 +110,21 @@ public class Main {
 //            }
 //        }
         //OK2:
-        System.out.print("=================\nSazba VAT 20 % a nižší nebo používají speciální sazbu: ");
+//        System.out.print("=================\nSazba VAT 20 % a nižší nebo používají speciální sazbu: ");
 
         // POKUS ITERATOR: iterator nelze použít na state list
 
         //OK3:
-        Iterator it;
-        it = statesUnder20.iterator();
-        while(it.hasNext()){
-            System.out.print(it.next());
-            if (it.hasNext()){
-                System.out.print(", ");
-            }else{
-                System.out.print(".");
-            }
-        }
+//        Iterator it;
+//        it = statesUnder20.iterator();
+//        while(it.hasNext()){
+//            System.out.print(it.next());
+//            if (it.hasNext()){
+//                System.out.print(", ");
+//            }else{
+//                System.out.print(".");
+//            }
+//        }
 
 
         // POKUS: NELZE APLIKOVAT LIST.GET NA STATELIST.GETSTATE - chyba v metodě getState?
@@ -197,6 +207,7 @@ public class Main {
 
         try {
             stateListOver20.exportToFile(OUTPUT_FILENAME);
+//            stateListUnder20.exportToFile2(OUTPUT_FILENAME); //toto se přepíše
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -214,9 +225,12 @@ public class Main {
         if (filter == 0) {filter = 20; }
 
         StateList stateListOverFilter = new StateList();
+        StateList stateListUnderFilter = new StateList();
         for (State state : stateList.getAllStates()) {
-            if (state.isOverXPercentVAT(filter)) {
+            if (state.isOverXPercentVAT(filter) == true) {
                 stateListOverFilter.addState(state);
+            } else {
+                stateListUnderFilter.addState(state);
             }
         }
 
@@ -224,30 +238,32 @@ public class Main {
         Collections.reverse(stateListOverFilter.states);
 
         for (State state : stateListOverFilter.getAllStates()) {
-            System.out.println(state.getStateSpecialFormatInfo());
+            System.out.println(state.getStateSpecialFormatInfo2());
         } // vytiskne seřazené státy, které splňují podmínku, ve spec. formátu
 
-        List <String> statesUnderFilter = new ArrayList<>();
-        for (State state : stateList.getAllStates()) {
-            if (state.convertFullVATtoDouble() > filter && !state.isUsingSpecialVAT){
-                statesUnderFilter.add(state.getSign());
-            }
-        }
-
+//        ok:
+//        List <String> statesUnderFilter = new ArrayList<>();
+//        for (State state : stateList.getAllStates()) {
+//            if (state.convertFullVATtoDouble() > filter && !state.isUsingSpecialVAT){
+//                statesUnderFilter.add(state.getSign());
+//            }
+//        }
+//        ok:
         System.out.print("=================\nSazba VAT "+filter+" % a nižší nebo používají speciální sazbu: ");
-
+        stateListUnderFilter.printLineOfSignsUnderFilter();
         // POKUS ITERATOR: iterator nelze použít na state list
 
-
-        it = statesUnderFilter.iterator();
-        while(it.hasNext()){
-            System.out.print(it.next());
-            if (it.hasNext()){
-                System.out.print(", ");
-            }else{
-                System.out.print(".");
-            }
-        }
+//        ok:
+//        Iterator it;
+//        it = statesUnderFilter.iterator();
+//        while(it.hasNext()){
+//            System.out.print(it.next());
+//            if (it.hasNext()){
+//                System.out.print(", ");
+//            }else{
+//                System.out.print(".");
+//            }
+//        }
 
         // zde ještě vytvořit kolekci stateListUnderFilter??
 

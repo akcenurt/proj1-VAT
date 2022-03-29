@@ -36,7 +36,8 @@ public class StateList {
 
     // načtení z výchozího souboru:
 
-    public void loadFromFile (String filename, String delimiter) {
+
+    public void loadFromFile (String filename, String delimiter) throws IOException{
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
 
             while (scanner.hasNextLine()) {
@@ -52,7 +53,7 @@ public class StateList {
                 states.add(state); }
         }
         catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Chyba při čtení souboru.");
         }
     }
 
@@ -61,15 +62,28 @@ public class StateList {
     public void exportToFile(String output) throws IOException {
         int lineNumber = 0;
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
-            for (State state : states) {
+                for (State state : states) {
                 String stateInLine = state.getStateSpecialFormatInfo();
                 writer.println(stateInLine);
                 lineNumber++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Chyba při zápisu: "+output+" řádek: "+lineNumber+": "+e.getLocalizedMessage());
         }
     }
+
+//    public void exportToFile2(String output) throws IOException {
+//        int lineNumber = 0;
+//        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
+//            for (State state : states) {
+//                String stateInLine = state.getSign()+", ";
+//                writer.println(stateInLine);
+//                lineNumber++;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void printStates1() {
         System.out.println("Státy se základní sazbou DPH vyšší než 20% a zároveň nepoužívající speciální sazbu daně seřazeny sestupně:\n");
@@ -78,12 +92,14 @@ public class StateList {
         }
     }
 
+
+
+
+
     public void printLineOfSignsUnder20() {
         List <String> statesUnder20 = new ArrayList<>();
-        for (State state : states) {
-            if (state.convertFullVATtoDouble() > 20 && !state.isUsingSpecialVAT){
-                statesUnder20.add(state.getSign());
-            }
+        for (State state : states) { //pro státy z stateLIstUnder20
+            statesUnder20.add(state.getSign());
         }
         System.out.print("=================\nSazba VAT 20 % a nižší nebo používají speciální sazbu: ");
         Iterator it;
@@ -98,5 +114,46 @@ public class StateList {
         }
 
     }
+
+    public void printLineOfSignsUnderFilter() {
+        List <String> statesUnderFilter = new ArrayList<>();
+        for (State state : states) { //pro státy z stateLIstUnder20
+            statesUnderFilter.add(state.getSign());
+        }
+//        System.out.print("=================\nSazba VAT pod zadanou hodnotu nebo používají speciální sazbu: ");
+        Iterator it;
+        it = statesUnderFilter.iterator();
+        while(it.hasNext()){
+            System.out.print(it.next());
+            if (it.hasNext()){
+                System.out.print(", ");
+            }else{
+                System.out.print(".");
+            }
+        }
+
+    }
+
+// POKUS O METODU, KTERÁ ZAHRNUJE ITERATOR A PŮJDE APLIKOVAT NA STATELIST:
+//    public void printLineOfSignsUnder20() {
+//        List <String> statesUnder20 = new ArrayList<>();
+//        for (State state : states) { //pro státy z stateLIstUnder20
+//            if (state.convertFullVATtoDouble() > 20 && !state.isUsingSpecialVAT){
+//                statesUnder20.add(state.getSign());
+//            }
+//        }
+//        System.out.print("=================\nSazba VAT 20 % a nižší nebo používají speciální sazbu: ");
+//        Iterator it;
+//        it = statesUnder20.iterator();
+//        while(it.hasNext()){
+//            System.out.print(it.next());
+//            if (it.hasNext()){
+//                System.out.print(", ");
+//            }else{
+//                System.out.print(".");
+//            }
+//        }
+//
+//    }
 
 }
