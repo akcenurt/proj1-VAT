@@ -13,12 +13,6 @@ public class Reading {
     }
 
 
-    /**
-     * Read one integer. If given input cannot be converted to integer,
-     * prints error and return 0;
-     * @return Integer read or 0 if invalid input entered
-     */
-
     public static double safeReadInt() {
         double result = 20;
         String inputText = getScanner().nextLine();

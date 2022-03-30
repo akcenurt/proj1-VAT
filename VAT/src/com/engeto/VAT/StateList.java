@@ -8,6 +8,7 @@ public class StateList {
     List<State> states = new ArrayList<>();
 
 
+
 // metoda poskytne kopii listu
     public List<State> getAllStates() {
         return new ArrayList<>(states);
@@ -55,19 +56,32 @@ public class StateList {
 
     // export do souboru:
 
-    public void exportToFile(String output) throws IOException {
-        int lineNumber = 0;
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
-                for (State state : states) {
-                String stateInLine = state.getStateSpecialFormatInfo();
-                writer.println(stateInLine);
-                lineNumber++;
-            }
-        } catch (IOException e) {
-            throw new IOException("Chyba při zápisu: "+output+" řádek: "+lineNumber+": "+e.getLocalizedMessage());
-        }
-    }
+//    public void exportToFile(String output) throws IOException {
+//        int lineNumber = 0;
+//        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
+//                for (State state : states) {
+//                String stateInLine = state.getStateSpecialFormatInfo();
+//                writer.println(stateInLine);
+//                lineNumber++;
+//            }
+//            writer.write("");
+//        } catch (IOException e) {
+//            throw new IOException("Chyba při zápisu: "+output+" řádek: "+lineNumber+": "+e.getLocalizedMessage());
+//        }
+//    }
 
+//        public void prvniCastVypisu(PrintWriter writer) {
+//   ...
+//            writer.println(...);
+//   ...
+//        }
+//        public void druhaCastVypisu(PrintWriter writer) {
+//   ...
+//            writer.println(...);
+//   ...
+//        }
+//
+//
 //    public void exportToFile2(String output) throws IOException {
 //        int lineNumber = 0;
 //        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(output)))){
