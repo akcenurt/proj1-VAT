@@ -119,7 +119,98 @@ public class Main {
 
 
         System.out.println("Zadej filtr: ");
-        double filter = Reading.safeReadInt();
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        Double filter;
+        if (input.isEmpty()){
+            filter = 20.0;
+            StateList stateListOverFilter = new StateList();
+            StateList stateListUnderFilter = new StateList();
+            for (State state : stateList.getAllStates()) {
+                if (state.isOverXPercentVAT(filter) == true) {
+                    stateListOverFilter.addState(state);
+                } else {
+                    stateListUnderFilter.addState(state);
+                }
+            }
+
+            Collections.sort(stateListOverFilter.states, new FullVATComparator());
+            Collections.reverse(stateListOverFilter.states);
+
+            for (State state : stateListOverFilter.getAllStates()) {
+                System.out.println(state.getStateSpecialFormatInfo2());
+            }
+
+            System.out.print("=================\nSazba VAT "+filter+" % a nižší nebo používají speciální sazbu: ");
+            stateListUnderFilter.printLineOfSignsUnderFilter();
+            String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
+            lineNumber = 0;
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(NEXTOUTPUT_FILENAME)))){
+                for (State state : stateListOverFilter.getAllStates()) {
+                    String stateInLine = state.getStateSpecialFormatInfo();
+                    writer.println(stateInLine);
+                    lineNumber++;
+                }
+                writer.println("=======================");
+                writer.println("Státy nesplňující podmínku: ");
+
+                for (int i = 0; i < stateListUnderFilter.sizeOfList();i++) {
+                    writer.print(stateListUnderFilter.getState(i).getSign());
+                    if (i != (stateListUnderFilter.sizeOfList() - 1)){
+                        writer.print(", ");
+                    }
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }else{
+        filter = Double.parseDouble(input);
+            StateList stateListOverFilter = new StateList();
+            StateList stateListUnderFilter = new StateList();
+            for (State state : stateList.getAllStates()) {
+                if (state.isOverXPercentVAT(filter) == true) {
+                    stateListOverFilter.addState(state);
+                } else {
+                    stateListUnderFilter.addState(state);
+                }
+            }
+
+            Collections.sort(stateListOverFilter.states, new FullVATComparator());
+            Collections.reverse(stateListOverFilter.states);
+
+            for (State state : stateListOverFilter.getAllStates()) {
+                System.out.println(state.getStateSpecialFormatInfo2());
+            }
+
+            System.out.print("=================\nSazba VAT "+filter+" % a nižší nebo používají speciální sazbu: ");
+            stateListUnderFilter.printLineOfSignsUnderFilter();
+            String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
+            lineNumber = 0;
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(NEXTOUTPUT_FILENAME)))){
+                for (State state : stateListOverFilter.getAllStates()) {
+                    String stateInLine = state.getStateSpecialFormatInfo();
+                    writer.println(stateInLine);
+                    lineNumber++;
+                }
+                writer.println("=======================");
+                writer.println("Státy nesplňující podmínku: ");
+
+                for (int i = 0; i < stateListUnderFilter.sizeOfList();i++) {
+                    writer.print(stateListUnderFilter.getState(i).getSign());
+                    if (i != (stateListUnderFilter.sizeOfList() - 1)){
+                        writer.print(", ");
+                    }
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 //        if (filter == 0) {filter = 20; }
 //        cheese = ""; // empty 'cheese' of prior input
 //        cheese = in.nextLine(); //read in a line of input
@@ -133,25 +224,27 @@ public class Main {
 //[enter code here checking validity of input]
 //        }
 
-        StateList stateListOverFilter = new StateList();
-        StateList stateListUnderFilter = new StateList();
-        for (State state : stateList.getAllStates()) {
-            if (state.isOverXPercentVAT(filter) == true) {
-                stateListOverFilter.addState(state);
-            } else {
-                stateListUnderFilter.addState(state);
-            }
-        }
+        // ok:
 
-        Collections.sort(stateListOverFilter.states, new FullVATComparator());
-        Collections.reverse(stateListOverFilter.states);
-
-        for (State state : stateListOverFilter.getAllStates()) {
-            System.out.println(state.getStateSpecialFormatInfo2());
-        }
-
-        System.out.print("=================\nSazba VAT "+filter+" % a nižší nebo používají speciální sazbu: ");
-        stateListUnderFilter.printLineOfSignsUnderFilter();
+//        StateList stateListOverFilter = new StateList();
+//        StateList stateListUnderFilter = new StateList();
+//        for (State state : stateList.getAllStates()) {
+//            if (state.isOverXPercentVAT(filter) == true) {
+//                stateListOverFilter.addState(state);
+//            } else {
+//                stateListUnderFilter.addState(state);
+//            }
+//        }
+//
+//        Collections.sort(stateListOverFilter.states, new FullVATComparator());
+//        Collections.reverse(stateListOverFilter.states);
+//
+//        for (State state : stateListOverFilter.getAllStates()) {
+//            System.out.println(state.getStateSpecialFormatInfo2());
+//        }
+//
+//        System.out.print("=================\nSazba VAT "+filter+" % a nižší nebo používají speciální sazbu: ");
+//        stateListUnderFilter.printLineOfSignsUnderFilter();
 
         // POKUS printwriter ne v metodě statelist, ale v hlavní metodě main:
 
@@ -173,28 +266,30 @@ public class Main {
 //                }
 //            }
 
-        String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
-        lineNumber = 0;
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(NEXTOUTPUT_FILENAME)))){
-            for (State state : stateListOverFilter.getAllStates()) {
-                String stateInLine = state.getStateSpecialFormatInfo();
-                writer.println(stateInLine);
-                lineNumber++;
-            }
-            writer.println("=======================");
-            writer.println("Státy nesplňující podmínku: ");
+        // ok2:
 
-            for (int i = 0; i < stateListUnderFilter.sizeOfList();i++) {
-                writer.print(stateListUnderFilter.getState(i).getSign());
-                if (i != (stateListUnderFilter.sizeOfList() - 1)){
-                    writer.print(", ");
-                }
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
+//        lineNumber = 0;
+//        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(NEXTOUTPUT_FILENAME)))){
+//            for (State state : stateListOverFilter.getAllStates()) {
+//                String stateInLine = state.getStateSpecialFormatInfo();
+//                writer.println(stateInLine);
+//                lineNumber++;
+//            }
+//            writer.println("=======================");
+//            writer.println("Státy nesplňující podmínku: ");
+//
+//            for (int i = 0; i < stateListUnderFilter.sizeOfList();i++) {
+//                writer.print(stateListUnderFilter.getState(i).getSign());
+//                if (i != (stateListUnderFilter.sizeOfList() - 1)){
+//                    writer.print(", ");
+//                }
+//            }
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
 //        String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
