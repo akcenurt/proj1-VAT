@@ -73,6 +73,25 @@ public class State {
         return Double.parseDouble(reducedVAT);
     }
 
+    public static State parse(String text, String delimiter) throws VATException {
+        String[] items = text.split(delimiter);
+
+        int numberOfItems = items.length;
+        if (numberOfItems != 5) throw new VATException("Nesprávný počet položek na řádku! Očekáváme 5 položek, místo "+numberOfItems+" položek na řádku: "+text);
+        String sign = items[0];
+        String name = items[1];
+        String fullVAT = items[2];
+        String reducedVAT = items[3];
+        try {
+            boolean isUsingSpecialVAT = Boolean.parseBoolean(items[4]);
+
+            return new State(sign, name, fullVAT, reducedVAT, isUsingSpecialVAT);
+        }
+        catch (NumberFormatException ex) { throw new VATException("Špatně zadané číslo na řádku: \""+text+"\"\n\t"+ex.getLocalizedMessage()); }
+
+
+    }
+
 
     // GETTERY A SETTERY:
 

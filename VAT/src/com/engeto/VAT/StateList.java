@@ -33,26 +33,60 @@ public class StateList {
 
     // načtení z výchozího souboru:
 
+//    public void importPlantsFromFile(String pathAndFile) throws PlantException {
+//        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(pathAndFile)))) {
+//            int lineNumber = 0;
+//            while (scanner.hasNextLine()) {
+//                String record = scanner.nextLine();
+//                lineNumber++;
+//                try {
+//                    this.addPlant(Plant.parse(record, FILE_ITEM_DELIMITER));
+//                } catch (PlantException e) {
+//                    throw new PlantException("Neplatný vstupní soubor "+pathAndFile+" na řádku "+lineNumber+":\n\t"+e.getLocalizedMessage());
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            throw new PlantException("Vstupní soubor "+pathAndFile+" nebyl nalezen: "+e.getLocalizedMessage());
+//        }
+//    }
 
-    public void loadFromFile (String filename, String delimiter) throws IOException{
+    public void loadFromFile (String filename) throws VATException{
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
-
+            int lineNumber = 0;
             while (scanner.hasNextLine()) {
                 String inputLine = scanner.nextLine();
-                String[] parts = inputLine.split(delimiter);
-                String sign = parts[0];
-                String name = parts[1];
-                String fullVAT = parts[2];
-                String reducedVAT = parts[3];
-                boolean isUsingSpecialVAT = Boolean.parseBoolean(parts[4]);
-
-                State state = new State (sign, name, fullVAT, reducedVAT, isUsingSpecialVAT);
-                states.add(state); }
-        }
-        catch (IOException e) {
-            throw new IOException("Chyba při čtení souboru.");
+                lineNumber++;
+                try {
+                    this.addState(State.parse(inputLine, DELIMITER));
+                } catch (VATException e) {
+                    throw new VATException("Neplatný vstupní soubor "+filename+" na řádku "+lineNumber+":\n\t"+e.getLocalizedMessage());
+                }
+            }
+    } catch (FileNotFoundException e) {
+            throw new VATException("Vstupní soubor "+filename+" nebyl nalezen: "+e.getLocalizedMessage());
         }
     }
+
+//ok load metoda:
+//    public void loadFromFile (String filename, String delimiter) throws IOException{
+//        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(filename)))) {
+//
+//            while (scanner.hasNextLine()) {
+//                String inputLine = scanner.nextLine();
+//                String[] parts = inputLine.split(delimiter);
+//                String sign = parts[0];
+//                String name = parts[1];
+//                String fullVAT = parts[2];
+//                String reducedVAT = parts[3];
+//                boolean isUsingSpecialVAT = Boolean.parseBoolean(parts[4]);
+//
+//                State state = new State (sign, name, fullVAT, reducedVAT, isUsingSpecialVAT);
+//                states.add(state); }
+//        }
+//        catch (IOException e) {
+//            throw new IOException("Chyba při čtení souboru.");
+//        }
+//    }
 
     // export do souboru:
 
