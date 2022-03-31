@@ -1,11 +1,5 @@
 package com.engeto.VAT;
 
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
-
 public class State {
 
 //    public static int FILTER = Main.readOneIntFromInput();
@@ -54,7 +48,6 @@ public class State {
         return name+" ("+sign+"): "+fullVAT+"%";
     }
 
-    // Sweden (SE):    25 % (12 %)
 
     public String getStateSpecialFormatInfo2 () {
         return name+" ("+sign+"): "+fullVAT+"% ("+reducedVAT+" %)";
@@ -72,6 +65,8 @@ public class State {
 
         return Double.parseDouble(reducedVAT);
     }
+
+    // parsování načtených údajů:
 
     public static State parse(String text, String delimiter) throws VATException {
         String[] items = text.split(delimiter);

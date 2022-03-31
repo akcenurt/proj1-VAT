@@ -1,19 +1,9 @@
 package com.engeto.VAT;
 
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.io.*;
 import java.util.*;
 
 public class Main {
-
-
-// načte input:
-//    public static double readOneIntFromInput() {
-//        double filter = Reading.safeReadInt();
-//        if (filter == 0) { filter = 20; }
-//        return filter;
-//    }
 
     public static final String INPUT_FILENAME = "vat-eu.txt";
 
@@ -30,15 +20,9 @@ public class Main {
         }
 
 
-//OK LOAD:
-//        try {
-//            stateList.loadFromFile(INPUT_FILENAME, "\t");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
 //        2. Vypiš seznam všech států a u každého uveď základní sazbu daně z přidané hodnoty ve formátu podle vzoru: Název země (zkratka): základní sazba %
-        System.out.println("Stát (zkratka): základní sazba DPH: \n");
+        System.out.println();
+        System.out.println("Státy načtené ze souboru ve formátu: Stát (zkratka): základní sazba DPH[%]: \n");
         for (State state : stateList.getAllStates()) {
             System.out.println(state.getStateSpecialFormatInfo());
         }
@@ -68,7 +52,7 @@ public class Main {
         Collections.sort(stateListOver20.states, new FullVATComparator());
         Collections.reverse(stateListOver20.states);
 
-        stateListOver20.printStates1();
+        stateListOver20.printStatesOver20();
 
 //        5. Pod výpis z bodu 3. doplň řádek s rovnítky pro oddělení a poté seznam zkratek států, které ve výpisu nefigurují.
 //        Opět dodrž formát podle vzoru (místo tří teček budou další státy):
@@ -83,18 +67,18 @@ public class Main {
 //        6. Výsledný výpis zapiš také do souboru s názvem vat-over-20.txt. Výstupní soubor ulož do stejné složky, ve které byl vstupní soubor.
 //        (Výpis na obrazovku zůstává.)
 
-
-// POKUS printwriter ne v metodě statelist, ale v hlavní metodě main:
         String OUTPUT_FILENAME = "vat-over-20.txt";
         int lineNumber = 0;
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FILENAME)))){
+
+            writer.println("Státy se základní sazbou DPH vyšší než 20% a zároveň nepoužívající speciální sazbu daně: ");
             for (State state : stateListOver20.getAllStates()) {
                 String stateInLine = state.getStateSpecialFormatInfo();
                 writer.println(stateInLine);
                 lineNumber++;
             }
             writer.println("=======================");
-            writer.println("Státy nesplňující podmínku: ");
+            writer.println("Státy nesplňující výše zmíněnou podmínku: ");
 
                 for (int i = 0; i < stateListUnder20.sizeOfList();i++) {
                     writer.print(stateListUnder20.getState(i).getSign());
@@ -107,16 +91,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        String OUTPUT_FILENAME = "vat-over-20.txt";
-
-
-//        try {
-//            stateListOver20.exportToFile(OUTPUT_FILENAME);
-////            stateListUnder20.exportToFile2(OUTPUT_FILENAME); //toto se přepíše
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
 
 //        7. Doplň možnost, aby uživatel z klávesnice zadal výši sazby DPH/VAT, podle které se má filtrovat.
@@ -162,13 +136,14 @@ public class Main {
             String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
             lineNumber = 0;
             try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(NEXTOUTPUT_FILENAME)))){
+                writer.println("Státy se základní sazbou DPH vyšší než "+filter+"% a zároveň nepoužívající speciální sazbu daně: ");
                 for (State state : stateListOverFilter.getAllStates()) {
                     String stateInLine = state.getStateSpecialFormatInfo();
                     writer.println(stateInLine);
                     lineNumber++;
                 }
                 writer.println("=======================");
-                writer.println("Státy nesplňující podmínku: ");
+                writer.println("Státy nesplňující výše zmíněnou podmínku: ");
 
                 for (int i = 0; i < stateListUnderFilter.sizeOfList();i++) {
                     writer.print(stateListUnderFilter.getState(i).getSign());
@@ -181,96 +156,6 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-//        if (filter == 0) {filter = 20; }
-//        cheese = ""; // empty 'cheese' of prior input
-//        cheese = in.nextLine(); //read in a line of input
-//
-////if user didn't enter anything (or just spacebar and return)
-//        if(cheese.isEmpty()) {
-//            System.out.println("Nothing was entered. Please try again");
-//        }
-////user entered something
-//        else {
-//[enter code here checking validity of input]
-//        }
-
-        // ok:
-
-//        StateList stateListOverFilter = new StateList();
-//        StateList stateListUnderFilter = new StateList();
-//        for (State state : stateList.getAllStates()) {
-//            if (state.isOverXPercentVAT(filter) == true) {
-//                stateListOverFilter.addState(state);
-//            } else {
-//                stateListUnderFilter.addState(state);
-//            }
-//        }
-//
-//        Collections.sort(stateListOverFilter.states, new FullVATComparator());
-//        Collections.reverse(stateListOverFilter.states);
-//
-//        for (State state : stateListOverFilter.getAllStates()) {
-//            System.out.println(state.getStateSpecialFormatInfo2());
-//        }
-//
-//        System.out.print("=================\nSazba VAT "+filter+" % a nižší nebo používají speciální sazbu: ");
-//        stateListUnderFilter.printLineOfSignsUnderFilter();
-
-        // POKUS printwriter ne v metodě statelist, ale v hlavní metodě main:
-
-//        String OUTPUT_FILENAME = "vat-over-20.txt";
-//        int lineNumber = 0;
-//        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(OUTPUT_FILENAME)))){
-//            for (State state : stateListOver20.getAllStates()) {
-//                String stateInLine = state.getStateSpecialFormatInfo();
-//                writer.println(stateInLine);
-//                lineNumber++;
-//            }
-//            writer.println("=======================");
-//            writer.println("Státy nesplňující podmínku: ");
-//
-//            for (int i = 0; i < stateListUnder20.sizeOfList();i++) {
-//                writer.print(stateListUnder20.getState(i).getSign());
-//                if (i != (stateListUnder20.sizeOfList() - 1)){
-//                    writer.print(", ");
-//                }
-//            }
-
-        // ok2:
-
-//        String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
-//        lineNumber = 0;
-//        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(NEXTOUTPUT_FILENAME)))){
-//            for (State state : stateListOverFilter.getAllStates()) {
-//                String stateInLine = state.getStateSpecialFormatInfo();
-//                writer.println(stateInLine);
-//                lineNumber++;
-//            }
-//            writer.println("=======================");
-//            writer.println("Státy nesplňující podmínku: ");
-//
-//            for (int i = 0; i < stateListUnderFilter.sizeOfList();i++) {
-//                writer.print(stateListUnderFilter.getState(i).getSign());
-//                if (i != (stateListUnderFilter.sizeOfList() - 1)){
-//                    writer.print(", ");
-//                }
-//            }
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-//        String NEXTOUTPUT_FILENAME = "vat-over-"+filter+".txt";
-//
-//        try {
-//            stateListOverFilter.exportToFile(NEXTOUTPUT_FILENAME);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
     }
 }
