@@ -1,1 +1,1 @@
-This program is able to read data from the csv, sort them and filter themand then export it to a new csv.
+This program is able to read data from a given text file, sort them, filter them and then export the result to a new text file.
